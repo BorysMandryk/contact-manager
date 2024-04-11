@@ -17,7 +17,6 @@ namespace Services
             _fileService = fileService;
         }
 
-        // TODO: check if needed
         public async Task CreateContact(ContactRequestDto contactDto)
         {
             var contact = new Contact
@@ -94,7 +93,7 @@ namespace Services
             contact.Phone = contactDto.Phone;
             contact.Salary = contactDto.Salary;
 
-            await _repository.UpdateContactAsync(contact);  // TODO: check
+            await _repository.UpdateContactAsync(contact);
         }
     }
 }
