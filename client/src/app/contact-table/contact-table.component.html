@@ -1,0 +1,144 @@
+<div class="mt-3">
+  <div class="form-group">
+    <input
+      type="search"
+      class="form-control"
+      [(ngModel)]="filter"
+      placeholder="Filter by name or phone"
+    />
+  </div>
+
+  <form #form="ngForm">
+    <table class="table table-hover table-lg">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date Of Birth</th>
+          <th>Married</th>
+          <th>Phone</th>
+          <th>Salary</th>
+          <th class="fit"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts | contact : filter; index as i">
+          <ng-container *ngIf="editableRow !== i + 1; else editable">
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.dateOfBirth | date : "dd.MM.YYYY" }}</td>
+            <td>{{ contact.married ? "Yes" : "No" }}</td>
+            <td>{{ contact.phone }}</td>
+            <td>${{ contact.salary | number : "1.0-0" }}</td>
+          </ng-container>
+          <ng-template #editable>
+            <td>
+              <input
+                type="text"
+                title="name"
+                name="name"
+                [(ngModel)]="contact.name"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="date"
+                title="dateOfBirth"
+                name="dateOfBirth"
+                [ngModel]="contact.dateOfBirth | date : 'dd.MM.YYYY'"
+                (ngModelChange)="contact.dateOfBirth = $event"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                title="married"
+                name="married"
+                [(ngModel)]="contact.married"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="text"
+                title="phone"
+                name="phone"
+                [(ngModel)]="contact.phone"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                title="salary"
+                name="salary"
+                [(ngModel)]="contact.salary"
+                required
+              />
+            </td>
+          </ng-template>
+
+          <td class="fit">
+            <ng-container
+              *ngIf="editableRow === -1 && deletableRow === -1"
+              #contolButtons
+            >
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm"
+                (click)="onEdit(i + 1)"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary btn-sm"
+                (click)="onDelete(i + 1)"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </ng-container>
+            <ng-container
+              *ngIf="editableRow === i + 1"
+              #editConfirmationButtons
+            >
+              <button
+                type="submit"
+                class="btn btn-outline-success btn-sm"
+                (click)="onEditConfirm()"
+              >
+                <i class="fas fa-check"></i>
+              </button>
+              <button
+                type="reset"
+                class="btn btn-outline-danger btn-sm"
+                (click)="onEditCancel()"
+              >
+                <i class="fas fa-close"></i>
+              </button>
+            </ng-container>
+            <ng-container
+              *ngIf="deletableRow === i + 1"
+              #deleteConfirmationButtons
+            >
+              <button
+                type="button"
+                class="btn btn-outline-success btn-sm"
+                (click)="onDeleteConfirm()"
+              >
+                <i class="fas fa-check"></i>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                (click)="onDeleteCancel()"
+              >
+                <i class="fas fa-close"></i>
+              </button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>

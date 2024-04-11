@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <form>
+        <div class="form-group">
+          <label for="csvSelect">Select CSV file</label>
+          <input
+            id="csvSelect"
+            type="file"
+            class="form-control-file"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+        <button *ngIf="file" class="btn btn-primary" (click)="onUpload($event)">Upload file</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <app-contact-table></app-contact-table>
+    </div>
+  </div>
+</div>
